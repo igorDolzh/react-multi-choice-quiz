@@ -11,19 +11,13 @@ class App extends Component {
 
     this.state = {
       counter: 0,
+      correctAmount: 0,
       questionId: 1,
       question: '',
       answerOptions: [],
       answer: '',
-      answersCount: {
-        Nintendo: 0,
-        Microsoft: 0,
-        Sony: 0
-      },
-      result: ''
+      finished: false
     };
-
-    this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
   }
 
   componentWillMount() {
@@ -56,23 +50,20 @@ class App extends Component {
     return array;
   }
 
-  handleAnswerSelected(event) {
-    this.setUserAnswer(event.currentTarget.value);
+  handleAnswerSelected = (answer) =>{
+    this.setUserAnswer(answer);
 
     if (this.state.questionId < quizQuestions.length) {
       setTimeout(() => this.setNextQuestion(), 300);
     } else {
-      setTimeout(() => this.setResults(this.getResults()), 300);
+      setTimeout(() => this.setState({ finished: true }), 300);
     }
   }
 
   setUserAnswer(answer) {
     this.setState((state, props) => ({
-      answersCount: {
-        ...state.answersCount,
-        [answer]: state.answersCount[answer] + 1
-      },
-      answer: answer
+      answer: answer.id,
+      correctAmount: state.correctAmount + (answer.correct ? 1 : 0)
     }));
   }
 
@@ -90,20 +81,7 @@ class App extends Component {
   }
 
   getResults() {
-    const answersCount = this.state.answersCount;
-    const answersCountKeys = Object.keys(answersCount);
-    const answersCountValues = answersCountKeys.map(key => answersCount[key]);
-    const maxAnswerCount = Math.max.apply(null, answersCountValues);
-
-    return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
-  }
-
-  setResults(result) {
-    if (result.length === 1) {
-      this.setState({ result: result[0] });
-    } else {
-      this.setState({ result: 'Undetermined' });
-    }
+    return this.state.correctAmount
   }
 
   renderQuiz() {
@@ -120,7 +98,7 @@ class App extends Component {
   }
 
   renderResult() {
-    return <Result quizResult={this.state.result} />;
+    return <Result quizResult={`You pick ${this.getResults()} correctly`} />;
   }
 
   render() {
@@ -130,7 +108,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>React Quiz</h2>
         </div>
-        {this.state.result ? this.renderResult() : this.renderQuiz()}
+        {this.state.finished ? this.renderResult() : this.renderQuiz()}
       </div>
     );
   }

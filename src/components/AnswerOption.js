@@ -8,13 +8,13 @@ function AnswerOption(props) {
         type="radio"
         className="radioCustomButton"
         name="radioGroup"
-        checked={props.answerType === props.answer}
-        id={props.answerType}
-        value={props.answerType}
+        checked={props.id === props.answer}
+        id={props.id}
+        value={props.id}
         disabled={props.answer}
         onChange={props.onAnswerSelected}
       />
-      <label className="radioCustomLabel" htmlFor={props.answerType}>
+      <label className="radioCustomLabel" htmlFor={props.id}>
         {props.answerContent}
       </label>
     </li>
