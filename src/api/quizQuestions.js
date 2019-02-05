@@ -1,32 +1,24 @@
 var quizQuestions = [
   {
-      question: "What franchise would you rather play a game from?",
+      question: "Inside which HTML element do we put the JavaScript?",
       answers: [
           {
-              id: "Microsoft",
-              content: "Halo1",
+              id: "1",
+              content: " <script>",
               correct: true
           },
           {
-              id: "Nintendo",
-              content: "Pokemon"
+              id: "2",
+              content: " <js>"
           },
           {
-              id: "Sony",
-              content: "Uncharted"
+              id: "3",
+              content: " <javascript>"
           },
           {
-            id: "Microsoft1",
-            content: "Halo"
+            id: "4",
+            content: " <scripting>"
           },
-          {
-            id: "Nintendo1",
-            content: "Pokemon"
-        },
-        {
-            id: "Sony1",
-            content: "Uncharted"
-        }
       ]
   },
   {
